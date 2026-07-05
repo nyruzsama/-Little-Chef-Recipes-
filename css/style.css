@@ -1,0 +1,495 @@
+/* ========================================
+   LittleChefRecipes — Premium Aesthetic
+   ======================================== */
+:root {
+  --cream: #FDF8F0; --warm-white: #FFF8F0; --light-beige: #F0E6D6;
+  --wood: #5A4A3A; --accent: #C4956A; --green: #7BAF6A;
+  --dark: #3D2C1A; --gold: #C4956A; --gold-light: #D4A574; --gold-dark: #8B5E3C;
+  --shadow: rgba(61,44,26,0.08); --shadow-lg: rgba(61,44,26,0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', 'DM Sans', sans-serif;
+  background: var(--cream); color: var(--dark);
+  overflow-x: hidden; -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--accent); color: white; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+/* ===== ANIMATED MESH BACKGROUND ===== */
+.mesh-bg {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+}
+.mesh-blob {
+  position: absolute; border-radius: 50%; filter: blur(80px);
+  animation: blob-drift 20s ease-in-out infinite;
+  will-change: transform;
+}
+.mesh-blob:nth-child(1) {
+  width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(196,149,106,0.12), transparent 70%);
+  top: -10%; left: -10%; animation-duration: 25s;
+}
+.mesh-blob:nth-child(2) {
+  width: 40vw; height: 40vw; background: radial-gradient(circle, rgba(139,94,60,0.08), transparent 70%);
+  bottom: -5%; right: -5%; animation-duration: 30s; animation-delay: -5s;
+}
+.mesh-blob:nth-child(3) {
+  width: 30vw; height: 30vw; background: radial-gradient(circle, rgba(212,165,116,0.1), transparent 70%);
+  top: 40%; left: 50%; animation-duration: 22s; animation-delay: -10s;
+}
+.mesh-blob:nth-child(4) {
+  width: 20vw; height: 20vw; background: radial-gradient(circle, rgba(196,149,106,0.06), transparent 70%);
+  top: 20%; right: 20%; animation-duration: 18s; animation-delay: -7s;
+}
+
+@keyframes blob-drift {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  25% { transform: translate(5%, 3%) scale(1.05) rotate(5deg); }
+  50% { transform: translate(-3%, 6%) scale(0.95) rotate(-3deg); }
+  75% { transform: translate(4%, -2%) scale(1.02) rotate(4deg); }
+}
+
+/* ===== SVG SECTION DIVIDERS ===== */
+.section-divider {
+  position: absolute; bottom: -1px; left: 0; right: 0; height: 80px;
+  pointer-events: none; z-index: 2;
+}
+.section-divider svg { width: 100%; height: 100%; }
+.section-divider-top {
+  position: absolute; top: -1px; left: 0; right: 0; height: 80px;
+  pointer-events: none; z-index: 2;
+}
+
+/* ===== LOADING SCREEN ===== */
+@keyframes loading-sparkle { 0%,100%{opacity:0;transform:scale(0)} 50%{opacity:1;transform:scale(1)} }
+.loading-sparkle { animation: loading-sparkle 2s ease-in-out infinite; }
+@keyframes scroll-dot { 0%{transform:translateY(2px);opacity:1} 100%{transform:translateY(12px);opacity:0} }
+.animate-scroll-dot { animation: scroll-dot 1.5s ease-in-out infinite; }
+@keyframes bounce-slow { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+.animate-bounce-slow { animation: bounce-slow 2.5s ease-in-out infinite; }
+
+/* ===== FLOATING INGREDIENTS ===== */
+.floating-ingredient {
+  will-change: transform;
+  animation: float-ingredient var(--dur,8s) ease-in-out infinite;
+  animation-delay: var(--del,0s);
+}
+@keyframes float-ingredient {
+  0%,100%{transform:translateY(0) rotate(0deg) scale(1)}
+  20%{transform:translateY(-12px) rotate(4deg) scale(1.05)}
+  40%{transform:translateY(-6px) rotate(-2deg) scale(0.98)}
+  60%{transform:translateY(-18px) rotate(6deg) scale(1.03)}
+  80%{transform:translateY(-8px) rotate(-3deg) scale(1)}
+}
+.herb-icon { animation: herb-float 15s ease-in-out infinite; }
+
+/* ===== REVEAL ANIMATIONS ===== */
+.reveal { opacity:0; transform:translateY(40px); transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+.reveal.revealed { opacity:1; transform:translateY(0); }
+.reveal-left { opacity:0; transform:translateX(-40px); transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+.reveal-left.revealed { opacity:1; transform:translateX(0); }
+.reveal-right { opacity:0; transform:translateX(40px); transition:opacity 1s cubic-bezier(0.22,1,0.36,1), transform 1s cubic-bezier(0.22,1,0.36,1); }
+.reveal-right.revealed { opacity:1; transform:translateX(0); }
+.reveal-scale { opacity:0; transform:scale(0.85); transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+.reveal-scale.revealed { opacity:1; transform:scale(1); }
+
+/* ===== NAVIGATION ===== */
+.nav-link { position: relative; }
+.nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--accent); transition:width 0.4s cubic-bezier(0.22,1,0.36,1); }
+.nav-link:hover::after { width:100%; }
+
+/* ===== GLASS CARDS ===== */
+.glass-card {
+  background: rgba(255,255,255,0.55); backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 0 4px 30px var(--shadow), inset 0 1px 0 rgba(255,255,255,0.7);
+}
+.glass-card:hover {
+  background: rgba(255,255,255,0.7); backdrop-filter: blur(20px);
+  box-shadow: 0 8px 40px var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+/* ===== FEATURE CARDS ===== */
+.feature-card {
+  position: relative; overflow: hidden;
+  transform: translateY(0);
+  transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.5s ease, background 0.5s ease;
+  will-change: transform;
+}
+.feature-card::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(135deg, transparent 40%, rgba(196,149,106,0.06) 100%);
+  opacity:0; transition:opacity 0.5s ease;
+}
+.feature-card:hover::before { opacity:1; }
+.feature-card:hover { transform:translateY(-6px) scale(1.02); }
+.feature-card .icon-wrap {
+  transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.5s ease;
+  will-change: transform;
+}
+.feature-card:hover .icon-wrap {
+  transform: scale(1.15) rotate(-5deg);
+  box-shadow: 0 8px 30px rgba(196,149,106,0.25);
+}
+
+/* ===== RECIPE CARDS ===== */
+.recipe-card {
+  transform: translateY(0);
+  transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.5s ease;
+  will-change: transform;
+}
+.recipe-card:hover { transform: translateY(-10px) scale(1.01); }
+.recipe-card .recipe-img-wrap {
+  overflow: hidden; position: relative;
+}
+.recipe-card .recipe-img-wrap::after {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(to top, rgba(0,0,0,0.3), transparent 50%);
+  opacity:0; transition:opacity 0.5s ease;
+}
+.recipe-card:hover .recipe-img-wrap::after { opacity:1; }
+.recipe-card .recipe-img-icon {
+  transition: transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
+  will-change: transform;
+}
+.recipe-card:hover .recipe-img-icon { transform: scale(1.2) translateY(-8px); }
+
+.line-clamp-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+/* ===== CATEGORY CARDS ===== */
+.category-card {
+  transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  will-change: transform;
+}
+.category-card:hover { transform:translateY(-6px) scale(1.02); }
+.category-card .cat-overlay {
+  position:absolute; inset:0;
+  background: linear-gradient(to top, rgba(0,0,0,0.5), transparent 50%);
+  opacity:0; transition:opacity 0.5s ease;
+}
+.category-card:hover .cat-overlay { opacity:1; }
+.category-card .cat-icon {
+  transition: transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
+  will-change: transform;
+}
+.category-card:hover .cat-icon { transform: scale(1.15) translateY(-6px); }
+
+/* ===== TESTIMONIALS ===== */
+.testimonials-carousel { scrollbar-width:none; -ms-overflow-style:none; cursor:grab; }
+.testimonials-carousel:active { cursor:grabbing; }
+.testimonials-carousel::-webkit-scrollbar { display:none; }
+.testimonial-card {
+  transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.5s ease;
+  will-change: transform;
+}
+.testimonial-card:hover { transform:translateY(-6px); }
+
+/* ===== 3D TILT CARDS ===== */
+.tilt-card {
+  transform-style: preserve-3d; perspective: 1000px;
+  will-change: transform;
+}
+
+/* ===== BUTTONS ===== */
+.btn-primary {
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, var(--accent), var(--gold-dark));
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s ease;
+  will-change: transform;
+}
+.btn-primary::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(135deg, var(--gold-dark), var(--accent));
+  opacity:0; transition:opacity 0.4s ease;
+}
+.btn-primary:hover::before { opacity:1; }
+.btn-primary:hover { transform:scale(1.05); }
+.btn-primary:active { transform:scale(0.97); }
+
+.btn-secondary {
+  position: relative; overflow: hidden;
+  border: 2px solid rgba(196,149,106,0.3);
+  transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.btn-secondary:hover {
+  border-color: var(--accent); background: rgba(196,149,106,0.06);
+  transform: scale(1.05);
+}
+
+.magnetic-btn { position:relative; transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+
+/* ===== RIPPLE EFFECT ===== */
+.ripple {
+  position:absolute; border-radius:50%;
+  background: rgba(255,255,255,0.4);
+  transform:scale(0); animation: ripple-anim 0.6s ease-out;
+  pointer-events:none;
+}
+@keyframes ripple-anim { to { transform:scale(4); opacity:0; } }
+
+/* ===== FAVORITE BUTTON ===== */
+.favorite-btn { transition: transform 0.3s ease, color 0.3s ease; }
+.favorite-btn.active svg { fill: var(--accent); animation: heart-pop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+.favorite-btn:hover { transform: scale(1.2); }
+@keyframes heart-pop { 0%{transform:scale(1)} 50%{transform:scale(1.4)} 100%{transform:scale(1)} }
+
+/* ===== THREE.JS CANVAS ===== */
+#three-canvas-container canvas, #mini-book-container canvas { display:block; width:100%!important; height:100%!important; }
+#book-container { transition: filter 0.4s ease; }
+#book-container:hover { filter: drop-shadow(0 0 40px rgba(196,149,106,0.2)); }
+
+/* ===== NAVBAR ===== */
+#navbar.scrolled { background:rgba(253,248,240,0.88)!important; backdrop-filter:blur(24px)!important; border-bottom:1px solid rgba(196,149,106,0.12); box-shadow:0 4px 30px rgba(0,0,0,0.04); }
+
+/* ===== COUNTERS ===== */
+.counter { font-variant-numeric: tabular-nums; }
+
+/* ===== PARALLAX ===== */
+.parallax-layer { pointer-events:none; will-change:transform; }
+
+/* ===== GRADIENT TEXT ===== */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent), var(--gold-dark), var(--accent));
+  background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; animation: gradient-shift 4s ease infinite;
+}
+@keyframes gradient-shift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+/* ===== STEAM ===== */
+.steam-particle {
+  position:absolute; background:radial-gradient(ellipse at center, rgba(255,255,255,0.25) 0%, transparent 70%);
+  border-radius:50%; pointer-events:none;
+  animation: steam-rise var(--dur,4s) ease-out infinite;
+}
+@keyframes steam-rise {
+  0%{opacity:0;transform:translateY(0) scale(0.5) translateX(0)}
+  15%{opacity:0.5}
+  100%{opacity:0;transform:translateY(-120px) scale(1.8) translateX(var(--drift,20px))}
+}
+
+/* ===== SPARKLE ===== */
+.sparkle { position:absolute; border-radius:50%; background:var(--gold); animation:sparkle-anim 3s ease-in-out infinite; }
+@keyframes sparkle-anim { 0%,100%{opacity:0;transform:scale(0)} 50%{opacity:1;transform:scale(1)} }
+
+/* ===== GLOW RING ===== */
+.glow-ring {
+  position:absolute; border-radius:50%;
+  border: 1px solid rgba(196,149,106,0.15);
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%,100%{transform:scale(1);opacity:0.3}
+  50%{transform:scale(1.1);opacity:0.6}
+}
+
+/* ===== SCROLL INDICATOR ===== */
+.scroll-indicator { animation: scroll-bounce 2s ease-in-out infinite; }
+@keyframes scroll-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+/* ===== STICKY CTA ===== */
+#sticky-cta { transition: transform 0.8s cubic-bezier(0.22,1,0.36,1); }
+
+/* ===== DECORATIVE DOTS ===== */
+.dots-pattern {
+  position:absolute; inset:0; pointer-events:none;
+  background-image: radial-gradient(rgba(196,149,106,0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ===== DIVIDER LINE ===== */
+.divider-line {
+  width: 60px; height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  margin: 0 auto;
+}
+
+/* ===== FLOATING LABELS ===== */
+.floating-label {
+  position: absolute; padding: 6px 14px;
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(8px);
+  border-radius: 100px; font-size: 12px; font-weight: 500; color: var(--dark);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  animation: label-float 6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes label-float {
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+/* ===== SECTION BADGE ===== */
+.section-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px 6px 6px;
+  background: rgba(255,255,255,0.7); backdrop-filter: blur(8px);
+  border-radius: 100px; border: 1px solid rgba(196,149,106,0.2);
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gold-dark); font-weight: 600;
+}
+
+/* ===== FLOATING ABSTRACT SHAPES ===== */
+.shape-diamond {
+  position: absolute; pointer-events: none;
+  width: 12px; height: 12px;
+  border: 1.5px solid rgba(196,149,106,0.25);
+  transform: rotate(45deg);
+  animation: shape-float 12s ease-in-out infinite;
+}
+.shape-circle {
+  position: absolute; pointer-events: none;
+  border: 1.5px solid rgba(196,149,106,0.2);
+  border-radius: 50%;
+  animation: shape-float 14s ease-in-out infinite;
+}
+.shape-dot {
+  position: absolute; pointer-events: none;
+  border-radius: 50%;
+  background: rgba(196,149,106,0.15);
+  animation: shape-float 10s ease-in-out infinite;
+}
+.shape-ring {
+  position: absolute; pointer-events: none;
+  border: 1px solid rgba(196,149,106,0.1);
+  border-radius: 50%;
+  animation: shape-float 18s ease-in-out infinite;
+}
+@keyframes shape-float {
+  0%,100%{transform:translateY(0) rotate(0deg) scale(1)}
+  25%{transform:translateY(-20px) rotate(90deg) scale(1.05)}
+  50%{transform:translateY(8px) rotate(180deg) scale(0.95)}
+  75%{transform:translateY(-12px) rotate(270deg) scale(1.02)}
+}
+
+/* ===== ABSTRACT GEOMETRIC ICON ===== */
+.geo-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; margin-bottom: 20px;
+  position: relative;
+}
+.geo-icon-inner {
+  position: relative; width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.geo-icon-svg { width: 28px; height: 28px; color: var(--accent); position: relative; z-index: 1; }
+.geo-icon-ring {
+  position: absolute; inset: 2px; border-radius: 50%;
+  border: 1.5px solid rgba(196,149,106,0.2);
+  animation: geo-glow 4s ease-in-out infinite;
+}
+.geo-icon-dot {
+  position: absolute; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); opacity: 0.3;
+}
+.geo-icon-dot.tl { top: -3px; left: -3px; }
+.geo-icon-dot.br { bottom: -3px; right: -3px; }
+.geo-icon-dot.tr { top: -3px; right: 8px; }
+@keyframes geo-glow {
+  0%,100%{opacity:0.3;transform:scale(1)}
+  50%{opacity:0.8;transform:scale(1.08)}
+}
+
+/* ===== TESTIMONIAL AVATAR ===== */
+.avatar-circle {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600; font-size: 18px; color: white;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* ===== DECORATIVE TOPOGRAPHIC PATTERN ===== */
+.pattern-topo {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  opacity: 0.03;
+}
+.pattern-topo svg { width: 100%; height: 100%; }
+
+/* ===== CATEGORY CARD OVERLAY PATTERN ===== */
+.cat-pattern {
+  position: absolute; inset: 0; pointer-events: none;
+  opacity: 0.04;
+}
+
+/* ===== LOADING BOOK ICON ===== */
+.loading-book {
+  position: relative; width: 64px; height: 80px;
+}
+.loading-book-spine {
+  position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  transform: translateX(-50%);
+}
+.loading-book-page {
+  position: absolute; top: 6px; width: 28px; height: 68px;
+  border: 1.5px solid var(--accent); border-radius: 1px;
+}
+.loading-book-page.left { left: 3px; border-right: none; border-radius: 2px 0 0 2px; }
+.loading-book-page.right { right: 3px; border-left: none; border-radius: 0 2px 2px 0; }
+
+/* ===== DECORATIVE DIVIDER LINE ===== */
+.divider-gold {
+  width: 80px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  margin: 0 auto;
+}
+.divider-thick {
+  width: 60px; height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+/* ===== DECORATIVE KITCHEN PATTERNS ===== */
+.pattern-herb {
+  position: absolute; pointer-events: none;
+  width: 120px; height: 120px;
+  opacity: 0.02;
+}
+.pattern-herb svg { width: 100%; height: 100%; }
+
+/* ===== RING DECORATION ===== */
+.deco-ring {
+  position: absolute; border-radius: 50%;
+  pointer-events: none;
+}
+.deco-ring-outer {
+  border: 1px solid rgba(196,149,106,0.12);
+  animation: ring-pulse 6s ease-in-out infinite;
+}
+.deco-ring-inner {
+  border: 1px solid rgba(196,149,106,0.06);
+  animation: ring-pulse 6s ease-in-out infinite 2s;
+}
+@keyframes ring-pulse {
+  0%,100%{transform:scale(1);opacity:0.3}
+  50%{transform:scale(1.08);opacity:0.6}
+}
+
+/* ===== NAVBAR LOGO ===== */
+.logo-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--gold-dark));
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) { .hero-content { text-align:center; } }
+@media (max-width: 768px) {
+  .reveal { transform:translateY(20px); }
+  .mesh-blob:nth-child(1) { width: 80vw; height: 80vw; }
+  .mesh-blob:nth-child(2) { width: 60vw; height: 60vw; }
+}
+@media (max-width: 480px) { .testimonial-card { min-width:280px; } }
+
+/* ===== SMOOTH IMAGE ===== */
+img { -webkit-user-drag:none; user-select:none; }
+
+/* ===== KEYFRAME UTILITY ===== */
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+@keyframes scaleIn { from{opacity:0;transform:scale(0.9)} to{opacity:1;transform:scale(1)} }
